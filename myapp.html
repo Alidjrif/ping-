@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ping Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .status-ok {
+      color: #22c55e;
+    }
+
+    .status-fail {
+      color: #ef4444;
+    }
+
+    .ping {
+      font-size: 24px;
+      margin-top: 15px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    .signature {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #64748b;
+      text-align: center;
+      border-top: 1px solid #334155;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🌐 Ping Monitor</h1>
+    <p>Your IP: <span id="ip">Loading...</span></p>
+    <p>Status: <span id="status" class="status-fail">Checking...</span></p>
+    <p class="ping">Ping: <span id="ping">--</span> ms</p>
+
+    <div class="signature">
+      <div>👨‍💻 by: <strong>rro_311</strong></div>
+      <div>🎯 in mission</div>
+    </div>
+  </div>
+
+  <div class="footer">Updated every 1 second</div>
+
+  <script>
+    // Get public IP
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('ip').textContent = data.ip;
+      })
+      .catch(() => {
+        document.getElementById('ip').textContent = 'Unavailable';
+      });
+
+    // Ping simulation
+    async function pingTest() {
+      const start = performance.now();
+      try {
+        await fetch("https://cors.eu.org/https://www.google.com/favicon.ico", { cache: "no-store" });
+        const end = performance.now();
+        const ms = Math.round(end - start);
+
+        document.getElementById("ping").textContent = ms;
+        document.getElementById("status").textContent = "[✓] google.com is reachable";
+        document.getElementById("status").className = "status-ok";
+      } catch {
+        document.getElementById("ping").textContent = "--";
+        document.getElementById("status").textContent = "[✗] google.com is unreachable";
+        document.getElementById("status").className = "status-fail";
+      }
+    }
+
+    setInterval(pingTest, 1000);
+  </script>
+</body>
+</html>
+
