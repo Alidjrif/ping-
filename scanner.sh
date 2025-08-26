@@ -33,9 +33,21 @@ curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
 # Prompt for base IP
 read -p "Enter the base IP (e.g. 192.168.1.): " base_ip
 
+# Add dot if missing
+[[ "${base_ip}" != *"." ]] && base_ip="${base_ip}."
+
 echo -e "\n\e[1;35m🔎 Scanning network $base_ip.1-254 ...\e[0m"
 
 active_count=0
+
+# Include localhost and device IP
+echo -e "\e[1;32m✅ Active: 127.0.0.1 (localhost)\e[0m"
+((active_count++))
+
+if [[ -n "$LOCAL_IP" ]]; then
+    echo -e "\e[1;32m✅ Active: $LOCAL_IP (This device)\e[0m"
+    ((active_count++))
+fi
 
 # Scan loop (no subshells for correct counting)
 for i in $(seq 1 254); do
