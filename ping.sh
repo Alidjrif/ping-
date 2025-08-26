@@ -10,10 +10,10 @@ while true; do
     ping_result=$(ping -c 1 -W 1 $ip | grep 'time=')
 
     if [[ $ping_result == *"time="* ]]; then
-        time_ms=$(echo $ping_result | grep -oP 'time=\>
-        echo -ne "\r$ip --> ${GREEN}${time_ms} ms${NC}>
+        time_ms=$(echo $ping_result | grep -oP 'time=\K[0-9.]+')
+        echo -ne "\r$ip --> ${GREEN}${time_ms} ms${NC}"
     else
-        echo -ne "\r$ip --> ${RED}❌ The device is not>
+        echo -ne "\r$ip --> ${RED}❌ The device is not responding${NC}"
     fi
 
     sleep 0.5
